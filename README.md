@@ -1,0 +1,2 @@
+# Blog
+Personal amateur project
