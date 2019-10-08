@@ -1,3 +1,3 @@
 # Blog
-Personal amateur project./n
-python+django
+python+django, Personal amateur project.
+
