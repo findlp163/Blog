@@ -1,0 +1,18 @@
+from django.db import models
+
+
+class Comment(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=255)
+    text = models.TextField()
+    created_time = models.DateTimeField(auto_now_add=True)
+
+    post = models.ForeignKey('blog.Post')
+
+    def __str__(self):
+        return self.text[:20]
+
+    class Meta:
+        db_table = 'tb_comment'
+        verbose_name = '分类'
+        verbose_name_plural = verbose_name

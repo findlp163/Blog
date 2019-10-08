@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body %}
+    <div class="col-sm-8">
+        <div class="view-content-left">
+            <div class="content-header">
+                <h2>{{ post.title }}</h2>
+                <span>
+                    <i class="fa fa-eye"></i>{{ post.views }}
+                </span>
+                <span>
+                    <i class="fa fa-comment-o"></i>{{ comment_list.count }}
+                </span>
+                <span>
+                    <i class="fa fa-clock-o"></i>{{ post.created_time }}
+                </span>
+            </div>
+            <p></p>
+            <div class="article">
+                {{ post.body|safe }}
+            </div>
+            <div class="clearfix"></div>
+            <hr/>
+            <h3><b>{{ comment_list.count }} 条评论</b></h3>
+            <br/>
+            <section class="comment-area" id="comment-area">
+                <span id="comment-login">评论请先登录:<a href="{% url 'oauth:qq_login' %}"><img
+                        src="{% static 'img/connect_qq.png' %}"
+                        class="login-method"></a></span>
+                <form action="{% url 'comments:post_comment' post.pk %}" method="post" id="comment-form"
+                      class="comment-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="{{ form.email.id_for_label }}">邮箱：</label>
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.text.id_for_label }}">评论内容:</label>
+                            {{ form.text }}
+                            {{ form.text.errors }}
+                            <button class="comment-btn" type="submit">
+                                <i class="fa fa-paper-plane"></i>
+                                发布
+                            </button>
+                        </div>
+                    </div>    <!-- row -->
+                </form>
+                <br/>
+                <div class="comment-list-panel">
+                    <ul class="comment-list list-unstyled">
+                        {% for comment in comment_list %}
+                            <li class="comment-item">
+                                <span class="nickname">{{ comment.name }}</span>
+                                <time class="submit-date">{{ comment.created_time }}</time>
+                                <div class="text">
+                                    &#12288;&#12288;{{ comment.text }}
+                                </div>
+                            </li>
+                            <hr/>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock body %}
+
+
